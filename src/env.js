@@ -11,13 +11,11 @@ export const env = createEnv({
 			process.env.NODE_ENV === "production"
 				? z.string()
 				: z.string().optional(),
-		BETTER_AUTH_GITHUB_CLIENT_ID: z.string(),
-		BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string(),
 		DB_DATABASE: z.string(),
 		DB_USERNAME: z.string(),
 		DB_PASSWORD: z.string(),
 		DB_HOST: z.string(),
-		DB_PORT: z.string().optional().default('5432').transform((val) => parseInt(val, 10)),
+		DB_PORT: z.coerce.number().default(5432),
 		NODE_ENV: z
 			.enum(["development", "test", "production"])
 			.default("development"),
@@ -38,9 +36,6 @@ export const env = createEnv({
 	 */
 	runtimeEnv: {
 		BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
-		BETTER_AUTH_GITHUB_CLIENT_ID: process.env.BETTER_AUTH_GITHUB_CLIENT_ID,
-		BETTER_AUTH_GITHUB_CLIENT_SECRET:
-			process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET,
 		DB_DATABASE: process.env.DB_DATABASE,
 		DB_USERNAME: process.env.DB_USERNAME,
 		DB_PASSWORD: process.env.DB_PASSWORD,

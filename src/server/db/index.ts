@@ -4,7 +4,7 @@ import postgres from "postgres";
 import { env } from "~/env";
 import * as schema from "./schema";
 
-const databaseUrl = `postgresql://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT ?? 5432}/${env.DB_DATABASE}`;
+const databaseUrl = `postgresql://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`;
 
 /**
  * Cache the database connection in development. This avoids creating a new connection on every HMR
