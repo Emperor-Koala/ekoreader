@@ -1,29 +1,47 @@
-# Create T3 App
+# EkoReader
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+EkoReader is a work-in-progress ebook library and reader. This project makes use of the [T3 Stack](https://create.t3.gg/).
 
-## What's next? How do I make an app with this?
+## Project Goals
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+This project has the following goals:
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+### 1. Learning
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Through this project, I wish to learn what it takes to build a proper content management system, such as a book library, including things like access control, permission systems, authentication etc. Later on, I also intend to build a mobile app that ties in with this system using Expo/React Native, learning how to properly build out that kind of viewing system.
 
-## Learn More
+### 2. Features
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+To work toward the learning goals, I wish to eventually implement all of the following features:
+- [ ] Resource CRUD Management
+    - [ ] Resource Create
+    - [ ] Resource Read
+    - [ ] Reaource Update
+    - [ ] Resource Delete
+    - [ ] Bulk Resource Create
+    - [ ] Bulk Resource Import
+- [ ] User Authentication
+    - [ ] Email/Password
+    - [ ] Google
+    - [ ] Microsoft
+    - [ ] Sign Up
+    - [ ] Sign In
+    - [ ] Manual User Creation
+- [ ] Permissions/Access Management
+    - [ ] Individual User Access to Resource CRUD
+        - [ ] User Access to Resource Create
+        - [ ] User Access to Resource Read
+        - [ ] User Access to Resource Update
+        - [ ] User Access to Resource Delete
+    - [ ] Permission Groups
+        - [ ] Group Access to CRUD
+            - [ ] Group Access to Resource Create
+            - [ ] Group Access to Resource Read
+            - [ ] Group Access to Resource Update
+            - [ ] Group Access to Resource Delete
+        - [ ] Group Permission/Access Inheritance
+- [ ] Resource Grouping (Collections)
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### 3. Style/Accessibility
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+While not my primary focus, I would at least like to try and make this project look presentable. I would also like to make sure that there is even just basic accessibility aids, like semantic HTML, and ideally ARIA properties where applicable. Of course, I am not someone who needs these features, an as such, they are likely to fall through the cracks in places. As the project nears completion, I would be open to having others contribute to improving such features.
