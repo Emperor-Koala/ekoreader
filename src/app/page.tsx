@@ -1,13 +1,7 @@
-import { headers } from "next/headers";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-
-import { LatestPost } from "~/app/_components/post";
-import { auth } from "~/server/better-auth";
-import { getSession } from "~/server/better-auth/server";
 import { api, HydrateClient } from "~/trpc/server";
 import { Button } from "~/components/ui/button";
-import { Dialog, DialogTrigger, DialogContent } from "~/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "~/components/ui/dialog";
+import { CreateBookForm } from "./_components/create-book-form";
 
 export default async function Home() {
 	const books = await api.books.listAll();
@@ -20,7 +14,10 @@ export default async function Home() {
 						<Button>Add Book</Button>
 					</DialogTrigger>
 					<DialogContent>
-						{/* <CreateBookForm /> */}
+						<DialogHeader>
+							<DialogTitle>Create Book</DialogTitle>
+						</DialogHeader>
+						<CreateBookForm />
 					</DialogContent>
 				</Dialog>
 				{books.map((book) => <p>{book.title}</p>)}
