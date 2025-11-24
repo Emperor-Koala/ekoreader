@@ -2,7 +2,9 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
 import { env } from "~/env";
-import * as schema from "./schema";
+import * as auth from "./schema/auth";
+import { File } from "./schema/file";
+import { Book } from "./schema/book";
 
 const databaseUrl = `postgresql://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`;
 
@@ -17,4 +19,10 @@ const globalForDb = globalThis as unknown as {
 const conn = globalForDb.conn ?? postgres(databaseUrl);
 if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 
-export const db = drizzle(conn, { schema });
+export const db = drizzle(conn, {
+	schema: {
+		...auth,
+		files: File,
+		books: Book,
+	},
+});
