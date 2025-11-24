@@ -37,8 +37,14 @@ export const CreateBookForm = () => {
         },
     });
 
+    const submit = (e: React.FormEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
+    }
+
     return (
-        <form className="flex flex-col gap-5">
+        <form className="flex flex-col gap-5" onSubmit={submit}>
             <form.Field name="title">
                 {(field) => {
                     const isInvalid =
@@ -197,13 +203,19 @@ export const CreateBookForm = () => {
                                     if (e.target.files?.length) field.handleChange(e.target.files.item(0))
                                 }}
                                 aria-invalid={isInvalid}
-                                autoComplete="off"
                             />
                             {isInvalid && <FieldError errors={field.state.meta.errors} />}
                         </Field>
                     )
                 }}
             </form.Field>
+            <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+                {([canSubmit, isSubmitting]) => (
+                    <Button type="submit" disabled={!canSubmit}>
+                        {isSubmitting ? '...' : 'Submit'}
+                    </Button>
+                )}
+            </form.Subscribe>
         </form>
     );
 }
