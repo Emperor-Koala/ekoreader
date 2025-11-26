@@ -16,7 +16,8 @@ interface CreateBookFormValues {
     authors: string[];
     releaseDate: Date | undefined;
     tags: string[];
-    bookFile: File | null;
+    cover: File | null;
+    file: File | null;
 }
 
 export const CreateBookForm = () => {
@@ -29,7 +30,8 @@ export const CreateBookForm = () => {
             authors: [""],
             releaseDate: undefined,
             tags: [""],
-            bookFile: null,
+            cover: null,
+            file: null,
         } satisfies CreateBookFormValues as CreateBookFormValues,
 
         onSubmit: async ({ value }) => {
@@ -187,16 +189,40 @@ export const CreateBookForm = () => {
                     )
                 }}
             </form.Field>
-            <form.Field name="bookFile">
+            <form.Field name="cover">
                 {(field) => {
                     const isInvalid =
                         field.state.meta.isTouched && !field.state.meta.isValid
                     return (
                         <Field data-invalid={isInvalid}>
                             <FieldLabel htmlFor={field.name}>File</FieldLabel>
-                             <Input
+                            <Input
                                 id={field.name}
                                 type="file"
+                                accept="image/jpeg,image/png"
+                                name={field.name}
+                                onBlur={field.handleBlur}
+                                onChange={(e) => {
+                                    if (e.target.files?.length) field.handleChange(e.target.files.item(0))
+                                }}
+                                aria-invalid={isInvalid}
+                            />
+                            {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                        </Field>
+                    )
+                }}
+            </form.Field>
+            <form.Field name="file">
+                {(field) => {
+                    const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid
+                    return (
+                        <Field data-invalid={isInvalid}>
+                            <FieldLabel htmlFor={field.name}>File</FieldLabel>
+                            <Input
+                                id={field.name}
+                                type="file"
+                                accept="application/epub+zip"
                                 name={field.name}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => {

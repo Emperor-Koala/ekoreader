@@ -1,5 +1,6 @@
 import z from "zod/v4";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import { CreateBookSchema } from "~/server/db/schema/book";
 
 export const books = createTRPCRouter({
     listAll: publicProcedure
@@ -8,7 +9,7 @@ export const books = createTRPCRouter({
         }),
 
     createBook: publicProcedure
-        .input(z.object())
+        .input(CreateBookSchema)
         .mutation(async ({ctx, input}) => {
             console.debug(ctx, input);
         }),
