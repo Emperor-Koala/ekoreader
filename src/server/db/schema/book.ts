@@ -7,7 +7,7 @@ import { relations } from "drizzle-orm";
 
 export const books = pgTable("books", (t) => ({
     id: nanoid(t),
-    libraryId: t.integer().references(() => libraries.id),
+    libraryId: t.char({ length: 12 }).references(() => libraries.id),
     title: t.varchar({ length: 255 }).notNull(),
     summary: t.text().notNull(),
     cover: t.varchar({ length: 255 }),
