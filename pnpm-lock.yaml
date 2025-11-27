@@ -65,6 +65,9 @@ importers:
       lucide-react:
         specifier: ^0.554.0
         version: 0.554.0(react@19.2.0)
+      nanoid:
+        specifier: ^5.1.6
+        version: 5.1.6
       next:
         specifier: ^15.2.3
         version: 15.5.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -83,6 +86,9 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
+      slugify:
+        specifier: ^1.6.6
+        version: 1.6.6
       superjson:
         specifier: ^2.2.1
         version: 2.2.5
@@ -1589,6 +1595,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@5.1.6:
+    resolution: {integrity: sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   nanostores@1.0.1:
     resolution: {integrity: sha512-kNZ9xnoJYKg/AfxjrVL4SS0fKX++4awQReGqWnwTRHxeHGZ1FJFVgTqr/eMrNQdp0Tz7M7tG/TDaX8QfHDwVCw==}
     engines: {node: ^20.0.0 || >=22.0.0}
@@ -1722,6 +1733,10 @@ packages:
   shell-quote@1.8.3:
     resolution: {integrity: sha512-ObmnIF4hXNg1BqhnHmgbDETF8dLPCggZWBjkQfhZpbszZnYur5DUljTcCHii5LC3J5E0yeO/1LIMyH+UvHQgyw==}
     engines: {node: '>= 0.4'}
+
+  slugify@1.6.6:
+    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
+    engines: {node: '>=8.0.0'}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -2974,6 +2989,8 @@ snapshots:
 
   nanoid@3.3.11: {}
 
+  nanoid@5.1.6: {}
+
   nanostores@1.0.1: {}
 
   next@15.5.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
@@ -3117,6 +3134,8 @@ snapshots:
     optional: true
 
   shell-quote@1.8.3: {}
+
+  slugify@1.6.6: {}
 
   source-map-js@1.2.1: {}
 

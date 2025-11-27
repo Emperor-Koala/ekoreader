@@ -1,10 +1,13 @@
 import { pgTable } from "drizzle-orm/pg-core";
-import { createdAt, deletedAt, updatedAt } from "./_common";
-import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
+import { nanoid, createdAt, deletedAt, updatedAt } from "./_common";
+import { createInsertSchema } from "drizzle-zod";
 import z from "zod/v4";
+import { libraries } from "./library";
+import { relations } from "drizzle-orm";
 
-export const Book = pgTable("books", (t) => ({
-    id: t.integer().notNull().primaryKey().generatedByDefaultAsIdentity(),
+export const books = pgTable("books", (t) => ({
+    id: nanoid(t),
+    libraryId: t.integer().references(() => libraries.id),
     title: t.varchar({ length: 255 }).notNull(),
     summary: t.text().notNull(),
     cover: t.varchar({ length: 255 }),
@@ -17,17 +20,27 @@ export const Book = pgTable("books", (t) => ({
     deletedAt: deletedAt(t),
 }));
 
-export const CreateBookSchema = createInsertSchema(Book).omit({
+export const bookRelations = relations(books, ({one}) => ({
+    library: one(libraries, {
+        fields: [books.libraryId],
+        references: [libraries.id],
+    }),
+}));
+
+export const CreateBookSchema = createInsertSchema(books, {
+    cover: z.file().mime(["image/jpeg", "image/png"]),
+    file: z.file().mime("application/epub+zip"),
+}).omit({
     id: true,
     createdAt: true,
     updatedAt: true,
     deletedAt: true,
 });
 
-export const UpdateBookSchema = createUpdateSchema(Book, {
-    id: z.number(),
-}).omit({
-    createdAt: true,
-    updatedAt: true,
-    deletedAt: true,
-});
+// export const UpdateBookSchema = createUpdateSchema(books, {
+//     id: z.number(),
+// }).omit({
+//     createdAt: true,
+//     updatedAt: true,
+//     deletedAt: true,
+// });

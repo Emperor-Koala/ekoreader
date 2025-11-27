@@ -3,7 +3,8 @@ import postgres from "postgres";
 
 import { env } from "~/env";
 import * as auth from "./schema/auth";
-import { Book } from "./schema/book";
+import * as books from "./schema/book";
+import * as libraries from "./schema/library";
 
 const databaseUrl = `postgresql://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`;
 
@@ -21,6 +22,7 @@ if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 export const db = drizzle(conn, {
 	schema: {
 		...auth,
-		books: Book,
+		...books,
+		...libraries,
 	},
 });
