@@ -9,7 +9,7 @@ import { RecentlyAddedCarousel } from "./_components/recently-added-carousel";
 export default async function Home() {
 	return (
 		<HydrateClient>
-			<main className="flex min-h-screen flex-col">
+			<main className="flex min-h-screen flex-col p-4">
 				<RecentlyAddedCarousel />
 			</main>
 		</HydrateClient>
