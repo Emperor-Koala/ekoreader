@@ -1,5 +1,6 @@
 import z from "zod/v4";
 import { createTRPCRouter, publicProcedure } from "../trpc"
+import { books } from "~/server/db/schema/book";
 
 export const series = createTRPCRouter({
     listAll: publicProcedure
@@ -32,6 +33,10 @@ export const series = createTRPCRouter({
         }))
         .query(async ({ctx, input}) => {
             const results = await ctx.db.query.series.findMany({
+                with: {
+                    books: true,
+                },
+                where: (series, {gt, eq}) => gt(ctx.db.$count(books, eq(books.seriesId, series.id)), 1),
                 orderBy: (series, { desc }) => [desc(series.updatedAt)],
                 limit: input.pageSize,
                 offset: input.cursor * input.pageSize,
