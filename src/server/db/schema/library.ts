@@ -3,6 +3,7 @@ import { relations, sql } from "drizzle-orm";
 import { books } from "./book";
 import { createInsertSchema } from "drizzle-zod";
 import { nanoid, createdAt, deletedAt, updatedAt } from "./_common";
+import { series } from "./series";
 
 export const libraries = pgTable("libraries", (t) => ({
     id: nanoid(t),
@@ -15,6 +16,7 @@ export const libraries = pgTable("libraries", (t) => ({
 
 export const libraryRelations = relations(libraries, ({many}) => ({
     books: many(books),
+    series: many(series),
 }));
 
 export const CreateLibrarySchema = createInsertSchema(libraries).omit({

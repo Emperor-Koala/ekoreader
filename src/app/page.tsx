@@ -1,5 +1,5 @@
 import { HydrateClient } from "~/trpc/server";
-import { RecentlyAddedBooksCarousel, RecentlyAddedSeriesCarousel, RecentlyUpdatedSeriesCarousel } from "./_components/home-carousels";
+import { RecentlyAddedBooksCarousel, RecentlyAddedSeriesCarousel, RecentlyUpdatedSeriesCarousel } from "./_components/shared-carousels";
 
 export default async function Home() {
 	return (

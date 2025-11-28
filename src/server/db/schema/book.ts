@@ -8,8 +8,8 @@ import { series } from "./series";
 
 export const books = pgTable("books", (t) => ({
     id: nanoid(t),
-    libraryId: t.char({ length: 12 }).references(() => libraries.id),
-    seriesId: t.char({ length: 12 }).references(() => series.id),
+    libraryId: t.char({ length: 12 }).notNull().references(() => libraries.id),
+    seriesId: t.char({ length: 12 }).notNull().references(() => series.id),
     title: t.varchar({ length: 255 }).notNull(),
     summary: t.text().notNull(),
     cover: t.varchar({ length: 255 }),

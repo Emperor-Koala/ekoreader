@@ -10,18 +10,19 @@ export default function LibraryLayout({
 
     return (
         <Tabs defaultValue="recommended">
-            <div className="flex flex-row">
-                <div>
-                    <Suspense>
-                        {children}
-                    </Suspense>
+            <div className="flex flex-row items-center p-3 bg-slate-200">
+                <Suspense>
+                    {children}
+                </Suspense>
+                <div className="flex-1 flex justify-center">
+                    <TabsList className="gap-x-4">
+                        <TabsTrigger value="recommended">Recommended</TabsTrigger>
+                        <TabsTrigger value="series">Series</TabsTrigger>
+                        <TabsTrigger value="books">Books</TabsTrigger>
+                    </TabsList>
                 </div>
-                <TabsList className="flex-1">
-                    <TabsTrigger value="recommended">Recommended</TabsTrigger>
-                    <TabsTrigger value="series">Series</TabsTrigger>
-                    <TabsTrigger value="books">Books</TabsTrigger>
-                </TabsList>
             </div>
+
             <TabsContent value="recommended">
                 {recommended}
             </TabsContent>

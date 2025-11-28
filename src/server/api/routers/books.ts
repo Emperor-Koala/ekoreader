@@ -12,9 +12,11 @@ export const books = createTRPCRouter({
         .input(z.object({
             cursor: z.number().int().optional().default(0),
             pageSize: z.number().int().optional().default(15),
+            libraryId: z.string().length(12).optional(),
         }))
         .query(async ({ctx, input}) => {
             const results = await ctx.db.query.books.findMany({
+                where: input.libraryId ? (books, {eq}) => eq(books.libraryId, input.libraryId!) : undefined,
                 orderBy: (books, { desc }) => [desc(books.createdAt)],
                 limit: input.pageSize,
                 offset: input.cursor * input.pageSize,

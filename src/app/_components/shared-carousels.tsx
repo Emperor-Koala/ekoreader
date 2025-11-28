@@ -3,7 +3,9 @@
 import { api } from "~/trpc/react";
 import { Carousel } from "~/components/carousel";
 
-export const RecentlyAddedBooksCarousel = () => {
+
+
+export const RecentlyAddedBooksCarousel = ({ libraryId }: { libraryId?: string }) => {
     const books = api.books.recentlyAdded.useInfiniteQuery({}, {
         getNextPageParam: (lastPage) => lastPage.nextPage
     });
@@ -13,7 +15,7 @@ export const RecentlyAddedBooksCarousel = () => {
     return (<Carousel title="Recently Added Books" items={bookList?.books ?? []} onEndReached={() => books.fetchNextPage()} />);
 }
 
-export const RecentlyAddedSeriesCarousel = () => {
+export const RecentlyAddedSeriesCarousel = ({ libraryId }: { libraryId?: string }) => {
     const series = api.series.recentlyAdded.useInfiniteQuery({}, {
         getNextPageParam: (lastPage) => lastPage.nextPage
     });
@@ -23,7 +25,7 @@ export const RecentlyAddedSeriesCarousel = () => {
     return (<Carousel title="Recently Added Series" items={seriesList?.series ?? []} onEndReached={() => series.fetchNextPage()} />);
 }
 
-export const RecentlyUpdatedSeriesCarousel = () => {
+export const RecentlyUpdatedSeriesCarousel = ({ libraryId }: { libraryId?: string }) => {
     const series = api.series.recentlyUpdated.useInfiniteQuery({}, {
         getNextPageParam: (lastPage) => lastPage.nextPage
     });
