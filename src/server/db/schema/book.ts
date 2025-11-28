@@ -4,10 +4,12 @@ import { createInsertSchema } from "drizzle-zod";
 import z from "zod/v4";
 import { libraries } from "./library";
 import { relations } from "drizzle-orm";
+import { series } from "./series";
 
 export const books = pgTable("books", (t) => ({
     id: nanoid(t),
     libraryId: t.char({ length: 12 }).references(() => libraries.id),
+    seriesId: t.char({ length: 12 }).references(() => series.id),
     title: t.varchar({ length: 255 }).notNull(),
     summary: t.text().notNull(),
     cover: t.varchar({ length: 255 }),
@@ -25,10 +27,14 @@ export const bookRelations = relations(books, ({one}) => ({
         fields: [books.libraryId],
         references: [libraries.id],
     }),
+    series: one(series, {
+        fields: [books.seriesId],
+        references: [series.id],
+    }),
 }));
 
 export const CreateBookSchema = createInsertSchema(books, {
-    cover: z.file().mime(["image/jpeg", "image/png"]),
+    cover: z.file().mime(["image/jpeg", "image/png"]).nullish(),
     file: z.file().mime("application/epub+zip"),
 }).omit({
     id: true,

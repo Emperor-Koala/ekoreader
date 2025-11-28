@@ -1,7 +1,6 @@
 import z from "zod/v4";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { CreateBookSchema } from "~/server/db/schema/book";
-import { TextCursorInput } from "lucide-react";
 
 export const books = createTRPCRouter({
     listAll: publicProcedure
@@ -12,7 +11,6 @@ export const books = createTRPCRouter({
     recentlyAdded: publicProcedure
         .input(z.object({
             cursor: z.number().int().optional().default(0),
-            // page: z.number().int().optional().default(0),
             pageSize: z.number().int().optional().default(15),
         }))
         .query(async ({ctx, input}) => {

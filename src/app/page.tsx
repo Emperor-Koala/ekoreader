@@ -1,16 +1,13 @@
-import { api, HydrateClient } from "~/trpc/server";
-import { Button } from "~/components/ui/button";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "~/components/ui/dialog";
-import { CreateBookForm } from "./_components/create-book-form";
-import { CreateLibraryForm } from "./_components/create-library-form";
-import { RecentlyAddedCarousel } from "./_components/recently-added-carousel";
-// import "swiper/css/bundle";
+import { HydrateClient } from "~/trpc/server";
+import { RecentlyAddedBooksCarousel, RecentlyAddedSeriesCarousel, RecentlyUpdatedSeriesCarousel } from "./_components/home-carousels";
 
 export default async function Home() {
 	return (
 		<HydrateClient>
 			<main className="flex min-h-screen flex-col p-4">
-				<RecentlyAddedCarousel />
+				<RecentlyAddedBooksCarousel />
+				<RecentlyAddedSeriesCarousel />
+				<RecentlyUpdatedSeriesCarousel />
 			</main>
 		</HydrateClient>
 	);

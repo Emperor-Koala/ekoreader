@@ -1,32 +1,25 @@
 "use client";
 
 import { Card, CardContent } from "./ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "./ui/carousel";
+import { Carousel as UICarousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "./ui/carousel";
 import ImageWithFallback from "./image-with-fallback";
 import { useEffect, useState } from "react";
 
-type Book = {
-    summary: string;
-    title: string;
-    id: string;
-    cover: string | null;
-    createdAt: Date;
-    updatedAt: Date | null;
-    deletedAt: Date | null;
-    libraryId: string | null;
-    file: string;
-    authors: string[];
-    releaseDate: string | null;
-    tags: string[];
-};
-
 interface BookCarouselProps {
     title: string;
-    books: Book[];
+    items: {
+        id: string;
+        cover: string | null;
+        title: string;
+    }[];
     onEndReached: () => void;
 }
 
-export const BookCarousel = ({title,  books, onEndReached}: BookCarouselProps) => {
+export const Carousel = ({
+    title,
+    items,
+    onEndReached,
+}: BookCarouselProps) => {
 
     const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
@@ -42,7 +35,7 @@ export const BookCarousel = ({title,  books, onEndReached}: BookCarouselProps) =
     }, [carouselApi]);
 
     return (
-        <Carousel 
+        <UICarousel 
             setApi={setCarouselApi} 
             opts={{duration: 20, slidesToScroll: "auto"}} 
             className="max-w-full flex flex-col gap-2"
@@ -55,19 +48,19 @@ export const BookCarousel = ({title,  books, onEndReached}: BookCarouselProps) =
                 </div>
             </div>
             <CarouselContent className="right-0">
-                {books.map((book) => (
-                    <CarouselItem key={book.id} className="max-w-full flex-none">
+                {items.map((item) => (
+                    <CarouselItem key={item.id} className="max-w-full flex-none">
                         <Card className="p-0 overflow-clip">
                             <CardContent className="p-0 flex flex-col">
-                                <ImageWithFallback src={book.cover} alt={book.title} className="aspect-[.707]" width={150} height={0} objectFit="contain" />
+                                <ImageWithFallback src={item.cover} alt={item.title} className="aspect-[.707]" width={150} height={0} objectFit="contain" />
                                 <div className="px-2">
-                                    <p className="line-clamp-2">{book.title}</p>
+                                    <p className="line-clamp-2">{item.title}</p>
                                 </div>
                             </CardContent>
                         </Card>
                     </CarouselItem>
                 ))}
             </CarouselContent>
-        </Carousel>
+        </UICarousel>
     );
 }

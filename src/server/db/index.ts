@@ -5,6 +5,7 @@ import { env } from "~/env";
 import * as auth from "./schema/auth";
 import * as books from "./schema/book";
 import * as libraries from "./schema/library";
+import * as series from "./schema/series";
 
 const databaseUrl = `postgresql://${env.DB_USERNAME}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`;
 
@@ -24,5 +25,6 @@ export const db = drizzle(conn, {
 		...auth,
 		...books,
 		...libraries,
+		...series,
 	},
 });
