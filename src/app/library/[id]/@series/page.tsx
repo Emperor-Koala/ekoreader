@@ -1,6 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import ImageWithFallback from "~/components/image-with-fallback";
-import { Button } from "~/components/ui/button";
 import { Card, CardContent } from "~/components/ui/card";
 import { api } from "~/trpc/server";
 import { Pagination } from "./pagination";
@@ -21,7 +19,12 @@ export default async function SeriesPage({params, searchParams}: PageProps<'/lib
 
     return (
         <div>
-            <Pagination totalPages={pagination.totalPages} canGoForward={pagination.nextPage !== null} canGoBack={pagination.previousPage !== null} />
+            <Pagination 
+                totalPages={pagination.totalPages}
+                currentPage={Number(page) || 0}
+                canGoForward={pagination.nextPage !== null} 
+                canGoBack={pagination.previousPage !== null} 
+            />
             <div className="flex flex-row flex-wrap gap-4">
                 {series.map((series) => (
                     <Card key={`book-${series.id}`} className="p-0 overflow-clip">
