@@ -1,6 +1,8 @@
 import z from "zod/v4";
 import { createTRPCRouter, publicProcedure } from "../trpc"
 import { books } from "~/server/db/schema/book";
+import { series as seriesTable } from "~/server/db/schema/series";
+import { eq, sql } from "drizzle-orm";
 
 export const series = createTRPCRouter({
     listAll: publicProcedure
@@ -11,8 +13,8 @@ export const series = createTRPCRouter({
     recentlyAdded: publicProcedure
         .input(z.object({
             cursor: z.number().int().optional().default(0),
-            pageSize: z.number().int().optional().default(15),
-            libraryId: z.string().length(12).optional(),
+            pageSize: z.number().int().optional().default(20),
+            libraryId: z.string().optional(),
         }))
         .query(async ({ctx, input}) => {
             const results = await ctx.db.query.series.findMany({
@@ -21,36 +23,43 @@ export const series = createTRPCRouter({
                 limit: input.pageSize,
                 offset: input.cursor * input.pageSize,
             });
+            const totalRecords = await ctx.db.$count(seriesTable, input.libraryId ? eq(seriesTable.libraryId, input.libraryId!) : undefined);
 
             return {
                 series: results,
-                nextPage: results.length >= input.pageSize ? input.cursor + 1 : null,
+                pagination: {
+                    previousPage: input.cursor > 0 ? input.cursor - 1 : null,
+                    nextPage: results.length >= input.pageSize ? input.cursor + 1 : null,
+                    totalRecords,
+                }
             };
         }),
 
     recentlyUpdated: publicProcedure
         .input(z.object({
             cursor: z.number().int().optional().default(0),
-            pageSize: z.number().int().optional().default(15),
-            libraryId: z.string().length(12).optional(),
+            pageSize: z.number().int().optional().default(20),
+            libraryId: z.string().optional(),
         }))
         .query(async ({ctx, input}) => {
             const results = await ctx.db.query.series.findMany({
-                with: {
-                    books: true,
-                },
                 where: (series, {gt, eq, and}) => input.libraryId ? and(
-                    gt(ctx.db.$count(books, eq(books.seriesId, series.id)), 1),
+                    gt(ctx.db.$count(books, eq(sql`"books"."seriesId"`, series.id)), 1), // TODO replace with proper table vars when possible
                     eq(series.libraryId, input.libraryId!),
-                ) : gt(ctx.db.$count(books, eq(books.seriesId, series.id)), 1),
+                ) : gt(ctx.db.$count(books, eq(sql`"books"."seriesId"`, series.id)), 1), // TODO replace with proper table vars when possible
                 orderBy: (series, { desc }) => [desc(series.updatedAt)],
                 limit: input.pageSize,
                 offset: input.cursor * input.pageSize,
             });
+            const totalRecords = await ctx.db.$count(seriesTable, input.libraryId ? eq(seriesTable.libraryId, input.libraryId!) : undefined);
 
             return {
                 series: results,
-                nextPage: results.length >= input.pageSize ? input.cursor + 1 : null,
+                pagination: {
+                    previousPage: input.cursor > 0 ? input.cursor - 1 : null,
+                    nextPage: results.length >= input.pageSize ? input.cursor + 1 : null,
+                    totalRecords,
+                }
             };
         }),
 });
