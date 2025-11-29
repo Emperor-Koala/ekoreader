@@ -5,10 +5,29 @@ import { series as seriesTable } from "~/server/db/schema/series";
 import { eq, sql } from "drizzle-orm";
 
 export const series = createTRPCRouter({
-    listAll: publicProcedure
-        .query(async ({ctx}) => {
-            ctx.db.query.series.findMany({});
-        }),
+    list: publicProcedure
+        .input(z.object({
+                    page: z.number().int().optional().default(0),
+                    pageSize: z.number().int().optional().default(20),
+                    libraryId: z.string().optional(),
+                }))
+                .query(async ({ctx, input }) => {
+                    const results = await ctx.db.query.series.findMany({
+                        limit: input.pageSize,
+                        offset: input.page * input.pageSize,
+                    });
+                    const totalRecords = await ctx.db.$count(seriesTable, input.libraryId ? eq(seriesTable.libraryId, input.libraryId!) : undefined);
+        
+                    return {
+                        series: results,
+                        pagination: {
+                            previousPage: input.page > 0 ? input.page - 1 : null,
+                            nextPage: results.length >= input.pageSize ? input.page + 1 : null,
+                            totalRecords,
+                            totalPages: Math.ceil(totalRecords / input.pageSize),
+                        }
+                    }
+                }),
 
     recentlyAdded: publicProcedure
         .input(z.object({
