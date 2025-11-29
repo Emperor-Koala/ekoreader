@@ -50,11 +50,11 @@ export const Carousel = ({
             <CarouselContent className="right-0">
                 {items.map((item) => (
                     <CarouselItem key={item.id} className="max-w-full flex-none">
-                        <Card className="p-0 overflow-clip">
+                        <Card className="p-0 overflow-clip rounded-sm">
                             <CardContent className="p-0 flex flex-col">
                                 <ImageWithFallback src={item.cover} alt={item.title} className="aspect-[.707]" width={150} height={0} objectFit="contain" />
                                 <div className="px-2">
-                                    <p className="line-clamp-2">{item.title}</p>
+                                    <p className="line-clamp-2 text-sm">{item.title}</p>
                                 </div>
                             </CardContent>
                         </Card>

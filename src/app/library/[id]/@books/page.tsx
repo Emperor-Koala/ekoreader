@@ -27,11 +27,11 @@ export default async function BooksPage({params, searchParams}: PageProps<'/libr
             />
             <div className="flex flex-row flex-wrap gap-4">
                 {books.map((book) => (
-                    <Card key={`book-${book.id}`} className="p-0 overflow-clip">
+                    <Card key={`book-${book.id}`} className="p-0 overflow-clip rounded-sm">
                         <CardContent className="p-0 flex flex-col">
                             <ImageWithFallback src={book.cover} alt={book.title} className="aspect-[.707]" width={150} height={0} objectFit="contain" />
                             <div className="px-2">
-                                <p className="line-clamp-2">{book.title}</p>
+                                <p className="line-clamp-2 text-sm">{book.title}</p>
                             </div>
                         </CardContent>
                     </Card>
