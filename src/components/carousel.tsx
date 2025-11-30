@@ -4,6 +4,7 @@ import { Card, CardContent } from "./ui/card";
 import { Carousel as UICarousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "./ui/carousel";
 import ImageWithFallback from "./image-with-fallback";
 import { useEffect, useState } from "react";
+import { ItemCard } from "./item-card";
 
 interface BookCarouselProps {
     title: string;
@@ -50,14 +51,7 @@ export const Carousel = ({
             <CarouselContent className="right-0">
                 {items.map((item) => (
                     <CarouselItem key={item.id} className="max-w-full flex-none">
-                        <Card className="p-0 overflow-clip rounded-sm">
-                            <CardContent className="p-0 flex flex-col">
-                                <ImageWithFallback src={item.cover} alt={item.title} className="aspect-[.707]" width={150} height={0} objectFit="contain" />
-                                <div className="px-2">
-                                    <p className="line-clamp-2 text-sm">{item.title}</p>
-                                </div>
-                            </CardContent>
-                        </Card>
+                        <ItemCard cover={item.cover} title={item.title} />
                     </CarouselItem>
                 ))}
             </CarouselContent>

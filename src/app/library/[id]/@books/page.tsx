@@ -2,6 +2,7 @@ import ImageWithFallback from "~/components/image-with-fallback";
 import { Card, CardContent } from "~/components/ui/card";
 import { api } from "~/trpc/server";
 import { Pagination } from "./pagination";
+import { ItemCard } from "~/components/item-card";
 
 export default async function BooksPage({params, searchParams}: PageProps<'/library/[id]'>) {
     const {id} = await params;
@@ -27,14 +28,7 @@ export default async function BooksPage({params, searchParams}: PageProps<'/libr
             />
             <div className="flex flex-row flex-wrap gap-4">
                 {books.map((book) => (
-                    <Card key={`book-${book.id}`} className="p-0 overflow-clip rounded-sm">
-                        <CardContent className="p-0 flex flex-col">
-                            <ImageWithFallback src={book.cover} alt={book.title} className="aspect-[.707]" width={150} height={0} objectFit="contain" />
-                            <div className="px-2">
-                                <p className="line-clamp-2 text-sm">{book.title}</p>
-                            </div>
-                        </CardContent>
-                    </Card>
+                    <ItemCard key={`book-${book.id}`} title={book.title} cover={book.cover} />
                 ))}
             </div>
             <Pagination 

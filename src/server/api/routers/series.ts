@@ -5,6 +5,18 @@ import { series as seriesTable } from "~/server/db/schema/series";
 import { eq, sql } from "drizzle-orm";
 
 export const series = createTRPCRouter({
+    getById: publicProcedure
+        .input(z.string())
+        .query(({ctx, input: id}) => ctx.db.query.series.findFirst({
+            where: (series, {eq}) => eq(series.id, id),
+            with: {
+                library: true,
+                books: {
+                    orderBy: (books, {asc}) => asc(books.releaseDate),
+                },
+            },
+        })),
+
     list: publicProcedure
         .input(z.object({
                     page: z.number().int().optional().default(0),

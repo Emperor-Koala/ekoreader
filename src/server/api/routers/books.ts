@@ -11,6 +11,7 @@ export const books = createTRPCRouter({
             where: (books, {eq}) => eq(books.id, id),
             with: {
                 library: true,
+                series: true,
             },
         })),
 

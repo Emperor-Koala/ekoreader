@@ -22,7 +22,11 @@ export default async function BookPage({params}: PageProps<"/book/[id]">) {
                     <Button variant="ghost" size="icon">
                         <ArrowLeftIcon />
                     </Button> 
-                    <h6><span className="text-xl font-semibold">Test</span> <span className="text-sm">in {book.library.name}</span></h6>
+                    <div className="flex items-center gap-x-3">
+                        <h5 className="text-xl font-semibold">Test</h5>
+                        •
+                        <h6 className="text-sm italic">{book.series.title}{book.seriesNumber ? ` #${book.seriesNumber}` : ''}</h6>
+                    </div>
                 </div>
                 <div className="flex flex-row gap-x-2">
                     <Button variant="ghost"><PencilIcon /></Button>
@@ -38,10 +42,17 @@ export default async function BookPage({params}: PageProps<"/book/[id]">) {
                             <Button><HatGlassesIcon /> Read</Button>
                             <Button><DownloadIcon /> Download</Button>
                         </div>
-                        <Summary summary={book.summary} />
+                        {book.releaseDate && (
+                            <p className="text-sm">
+                                Published: {new Date(book.releaseDate+'Z').toLocaleDateString('utc', {dateStyle: "medium", timeZone: 'utc'})}
+                            </p>
+                        )}
+                        <Summary>{book.summary}</Summary>
                     </div>
                 </div>
-                <div className="grid grid-cols-[1fr_5fr] gap-y-2 p-3">
+                <div className="grid grid-cols-[1fr_6fr] gap-y-2 p-3">
+                    <p>Library</p>
+                    <p>{book.library.name}</p>
                     {book.publisher && (
                         <>
                             <p>Publisher</p>
@@ -52,20 +63,26 @@ export default async function BookPage({params}: PageProps<"/book/[id]">) {
                         <> 
                             <p>Genre</p>
                             <div className="flex flex-row gap-2">
-                                {book.genre.map((genre) => (<Chip>{genre}</Chip>))}
+                                {book.genre.map((genre) => (<Chip key={`g-${genre}`}>{genre}</Chip>))}
                             </div>
                         </>
                     )}
                     <p>Writers</p>
                     <div className="flex flex-row gap-2">
-                        {book.authors.map((author) => (<Chip>{author}</Chip>))}
+                        {book.authors.map((author) => (<Chip key={`a-${author}`}>{author}</Chip>))}
                     </div>
                     {!!book.tags.length && (
                         <> 
                             <p>Tags</p>
                             <div className="flex flex-row gap-2">
-                                {book.tags.map((tag) => (<Chip>{tag}</Chip>))}
+                                {book.tags.map((tag) => (<Chip key={`t-${tag}`}>{tag}</Chip>))}
                             </div>
+                        </>
+                    )}
+                    {book.isbn && (
+                        <>
+                            <p>ISBN</p>
+                            <p>{book.isbn}</p>
                         </>
                     )}
                     <p>File</p>
