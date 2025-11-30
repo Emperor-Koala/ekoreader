@@ -15,6 +15,8 @@ export const books = pgTable("books", (t) => ({
     cover: t.varchar({ length: 255 }),
     file: t.varchar({ length: 255 }).notNull(),
     authors: t.jsonb().$type<string[]>().notNull().default([]),
+    publisher: t.varchar({ length: 100 }),
+    genre: t.jsonb().$type<string[]>().notNull().default([]),
     releaseDate: t.date(),
     tags: t.jsonb().$type<string[]>().notNull().default([]),
     createdAt: createdAt(t),

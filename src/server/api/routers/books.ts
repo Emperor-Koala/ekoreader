@@ -5,6 +5,15 @@ import { eq } from "drizzle-orm";
 import { books as booksTable } from "~/server/db/schema/book";
 
 export const books = createTRPCRouter({
+    getById: publicProcedure
+        .input(z.string().length(12))
+        .query(({ctx, input: id}) => ctx.db.query.books.findFirst({
+            where: (books, {eq}) => eq(books.id, id),
+            with: {
+                library: true,
+            },
+        })),
+
     list: publicProcedure
         .input(z.object({
             page: z.number().int().optional().default(0),
