@@ -1,25 +1,25 @@
-import { pgTable } from "drizzle-orm/pg-core";
 import { nanoid, createdAt, deletedAt, updatedAt } from "./_common";
 import { createInsertSchema } from "drizzle-zod";
 import z from "zod/v4";
 import { libraries } from "./library";
 import { relations } from "drizzle-orm";
 import { series } from "./series";
+import { sqliteTable } from "drizzle-orm/sqlite-core";
 
-export const books = pgTable("books", (t) => ({
+export const books = sqliteTable("books", (t) => ({
     id: nanoid(t),
-    libraryId: t.char({ length: 12 }).notNull().references(() => libraries.id),
-    seriesId: t.char({ length: 12 }).notNull().references(() => series.id),
-    seriesNumber: t.smallint(),
-    title: t.varchar({ length: 255 }).notNull(),
+    libraryId: t.text({ length: 12 }).notNull().references(() => libraries.id),
+    seriesId: t.text({ length: 12 }).notNull().references(() => series.id),
+    seriesNumber: t.integer(),
+    title: t.text().notNull(),
     summary: t.text().notNull(),
-    cover: t.varchar({ length: 255 }),
-    file: t.varchar({ length: 255 }).notNull(),
-    authors: t.jsonb().$type<string[]>().notNull().default([]),
-    publisher: t.varchar({ length: 100 }),
-    genre: t.jsonb().$type<string[]>().notNull().default([]),
-    releaseDate: t.date(),
-    tags: t.jsonb().$type<string[]>().notNull().default([]),
+    cover: t.text(),
+    file: t.text().notNull(),
+    authors: t.text({ mode: "json" }).$type<string[]>().notNull().default([]),
+    publisher: t.text(),
+    genre: t.text({ mode: "json" }).$type<string[]>().notNull().default([]),
+    releaseDate: t.integer({mode: 'timestamp'}),
+    tags: t.text({ mode: "json" }).$type<string[]>().notNull().default([]),
     isbn: t.integer(),
     createdAt: createdAt(t),
     updatedAt: updatedAt(t),

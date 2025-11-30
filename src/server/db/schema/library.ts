@@ -1,14 +1,14 @@
-import { pgTable } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
 import { books } from "./book";
 import { createInsertSchema } from "drizzle-zod";
 import { nanoid, createdAt, deletedAt, updatedAt } from "./_common";
 import { series } from "./series";
+import { sqliteTable } from "drizzle-orm/sqlite-core";
 
-export const libraries = pgTable("libraries", (t) => ({
+export const libraries = sqliteTable("libraries", (t) => ({
     id: nanoid(t),
-    name: t.varchar({ length: 100 }).notNull(),
-    rootFolder: t.varchar({ length: 255 }).notNull(),
+    name: t.text().notNull(),
+    rootFolder: t.text().notNull(),
     createdAt: createdAt(t),
     updatedAt: updatedAt(t),
     deletedAt: deletedAt(t),

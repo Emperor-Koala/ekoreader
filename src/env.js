@@ -11,11 +11,6 @@ export const env = createEnv({
 			process.env.NODE_ENV === "production"
 				? z.string()
 				: z.string().optional(),
-		DB_DATABASE: z.string(),
-		DB_USERNAME: z.string(),
-		DB_PASSWORD: z.string(),
-		DB_HOST: z.string(),
-		DB_PORT: z.coerce.number().default(5432),
 		NODE_ENV: z
 			.enum(["development", "test", "production"])
 			.default("development"),
@@ -36,11 +31,6 @@ export const env = createEnv({
 	 */
 	runtimeEnv: {
 		BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
-		DB_DATABASE: process.env.DB_DATABASE,
-		DB_USERNAME: process.env.DB_USERNAME,
-		DB_PASSWORD: process.env.DB_PASSWORD,
-		DB_HOST: process.env.DB_HOST,
-		DB_PORT: process.env.DB_PORT,
 		NODE_ENV: process.env.NODE_ENV,
 	},
 	/**
