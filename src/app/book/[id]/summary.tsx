@@ -15,7 +15,7 @@ export const Summary = ({ summary }: { summary: string }) => {
     return (
         <>
             <div 
-                className="max-h-17 overflow-hidden transition-[max-height] duration-300 ease-[ease] transition-normal" 
+                className="max-h-27 overflow-hidden transition-[max-height] duration-300 ease-[ease] transition-normal" 
                 style={isExpanded ? { maxHeight: expandedHeight } : {}}
             >
                 <p className="text-sm" ref={ref}>{summary}</p>

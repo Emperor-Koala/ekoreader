@@ -37,6 +37,12 @@ export default async function BooksPage({params, searchParams}: PageProps<'/libr
                     </Card>
                 ))}
             </div>
+            <Pagination 
+                totalPages={pagination.totalPages} 
+                currentPage={Number(page) || 0}
+                canGoForward={pagination.nextPage !== null} 
+                canGoBack={pagination.previousPage !== null}
+            />
         </div>
     );
 }

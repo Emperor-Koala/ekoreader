@@ -6,7 +6,7 @@ import { books as booksTable } from "~/server/db/schema/book";
 
 export const books = createTRPCRouter({
     getById: publicProcedure
-        .input(z.string().length(12))
+        .input(z.string())
         .query(({ctx, input: id}) => ctx.db.query.books.findFirst({
             where: (books, {eq}) => eq(books.id, id),
             with: {
