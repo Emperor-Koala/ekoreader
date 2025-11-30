@@ -75,7 +75,7 @@ export default async function BookPage({params}: PageProps<"/book/[id]">) {
                 </div>
                 <div className="flex flex-row flex-wrap gap-4 p-3">
                     {series.books.map((book) => (
-                        <ItemCard cover={book.cover} title={book.title} />
+                        <ItemCard key={`book-${book.id}`} cover={book.cover} title={book.title} />
                     ))}
                 </div>
             </div>
