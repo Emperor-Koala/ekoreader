@@ -4,7 +4,7 @@ import { RecentlyAddedBooksCarousel, RecentlyAddedSeriesCarousel, RecentlyUpdate
 export default async function Home() {
 	return (
 		<HydrateClient>
-			<main className="flex min-h-screen flex-col p-4">
+			<main className="flex min-h-screen flex-col p-4 gap-y-8">
 				<RecentlyAddedBooksCarousel />
 				<RecentlyAddedSeriesCarousel />
 				<RecentlyUpdatedSeriesCarousel />

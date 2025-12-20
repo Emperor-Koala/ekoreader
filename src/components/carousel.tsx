@@ -1,26 +1,27 @@
 "use client";
 
-import { Card, CardContent } from "./ui/card";
 import { Carousel as UICarousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "./ui/carousel";
-import ImageWithFallback from "./image-with-fallback";
 import { useEffect, useState } from "react";
 import { ItemCard } from "./item-card";
+import { Spinner } from "./ui/spinner";
 
-interface BookCarouselProps {
+interface CarouselProps {
     title: string;
     items: {
         id: string;
         cover: string | null;
         title: string;
     }[];
+    loading?: boolean;
     onEndReached: () => void;
 }
 
 export const Carousel = ({
     title,
     items,
+    loading = false,
     onEndReached,
-}: BookCarouselProps) => {
+}: CarouselProps) => {
 
     const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
@@ -54,6 +55,11 @@ export const Carousel = ({
                         <ItemCard cover={item.cover} title={item.title} />
                     </CarouselItem>
                 ))}
+                {loading && (
+                    <CarouselItem className="max-w-full flex-none">
+                        <Spinner />
+                    </CarouselItem>
+                )}
             </CarouselContent>
         </UICarousel>
     );
