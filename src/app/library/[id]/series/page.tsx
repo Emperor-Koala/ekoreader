@@ -3,6 +3,7 @@ import { Card, CardContent } from "~/components/ui/card";
 import { api } from "~/trpc/server";
 import { Pagination } from "./pagination";
 import { ItemCard } from "~/components/item-card";
+import NavigationBar from "../nav";
 
 export default async function SeriesPage({params, searchParams}: PageProps<'/library/[id]'>) {
     const {id} = await params;
@@ -20,12 +21,15 @@ export default async function SeriesPage({params, searchParams}: PageProps<'/lib
 
     return (
         <div>
+            <NavigationBar libraryId={id} selected="series" />
+
             <Pagination 
                 totalPages={pagination.totalPages}
                 currentPage={Number(page) || 0}
                 canGoForward={pagination.nextPage !== null} 
                 canGoBack={pagination.previousPage !== null} 
             />
+            
             <div className="flex flex-row flex-wrap gap-4">
                 {series.map((series) => (
                     <ItemCard key={`book-${series.id}`} title={series.title} cover={series.cover} />
